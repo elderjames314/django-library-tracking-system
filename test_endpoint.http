@@ -1,0 +1,7 @@
+### Test loan extention
+POST localhost:8000/api/loan/1/loan_extension
+Content-Type: application/json
+
+{
+    "additional_daysadd": 7
+}

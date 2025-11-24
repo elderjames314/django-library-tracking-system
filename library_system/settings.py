@@ -1,6 +1,7 @@
 import os
 from pathlib import Path
 from dotenv import load_dotenv
+import crontab
 
 load_dotenv()
 
@@ -111,6 +112,13 @@ CELERY_RESULT_BACKEND = os.getenv('CELERY_RESULT_BACKEND', 'redis://redis:6379/0
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
+
+CELERY_BEAT_SCHEDULE = {
+    "send_daily_overdue_loan_notification": {
+        "task": "library.tasks.send_daily_loan_overdue_notification",
+        "schedule": crontab(hour=8, minute=0) # this will send overdue loan notification daily at 8:00AM
+    } 
+}
 
 # Email Configuration
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # For development
